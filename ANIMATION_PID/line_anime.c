@@ -1,8 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <math.h>
-#include "../PID_CONTROL_model2/my_val_define.h"
+#include "../PID_CONTROL_model2/my_header.h"
 
 #define INTERVAL 0.05
 #define S_T 0.0
@@ -31,7 +27,6 @@ int main(void)
 	double x_min=X_INIT_MIN, x_max=X_INIT_MAX;
 	double y_min=Y_INIT_MIN, y_max=Y_INIT_MAX;
 	double z_min=Z_INIT_MIN, z_max=Z_INIT_MAX;
-	int sc = S_T*20;
 
 	if ((gp = popen("/usr/local/bin/gnuplot", "w")) == NULL)
 	{
@@ -96,7 +91,6 @@ int main(void)
 		}
 		i++;
 		t += INTERVAL;
-		sc++;
 	}
 
 	fflush(gp);
