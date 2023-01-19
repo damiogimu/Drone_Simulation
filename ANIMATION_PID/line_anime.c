@@ -1,18 +1,18 @@
-#include "../PID_CONTROL_model2/my_header.h"
+#include "../PID_CONTROL/my_header.h"
 
 #define INTERVAL 0.05
 #define S_T 0.0
 
 #define X_INIT_MIN -1.0
-#define X_INIT_MAX 3.0
+#define X_INIT_MAX 5.0
 #define X_ITV 1.0
 
 #define Y_INIT_MIN -1.0
-#define Y_INIT_MAX 3.0
+#define Y_INIT_MAX 5.0
 #define Y_ITV 1.0
 
 #define Z_INIT_MIN -1.0
-#define Z_INIT_MAX 2.0
+#define Z_INIT_MAX 3.0
 #define Z_ITV 0.5
 
 #ifndef LOAD_F
@@ -24,9 +24,6 @@ int main(void)
 	FILE *gp;
 	int i = 0;
 	double t = S_T;
-	double x_min=X_INIT_MIN, x_max=X_INIT_MAX;
-	double y_min=Y_INIT_MIN, y_max=Y_INIT_MAX;
-	double z_min=Z_INIT_MIN, z_max=Z_INIT_MAX;
 
 	if ((gp = popen("/usr/local/bin/gnuplot", "w")) == NULL)
 	{
@@ -49,23 +46,13 @@ int main(void)
 	fprintf(gp, "set ylabel 'y [m]' offset -2.0,-2.0,0.0\n");
 	fprintf(gp, "set zlabel 'z [m]' offset 1.5,0.0,0.0\n");
 	fprintf(gp, "set border lw 1\n");
-	fprintf(gp, "set view 45,345\n");
+	fprintf(gp, "set view 90,360\n");
 
 	fprintf(gp, "set term gif animate delay 5 font 'Times New Roman, 20'\n");
 	fprintf(gp, "set output 'GIF/PID_PATH.gif'\n");
 
 	while (t <= TIME)
 	{
-// ---- 途中 (ドローンの動きに対して軸の目盛をずらす) ---- //
-/*
-		fprintf(gp, "set xrange [%f:%f]\n", X_MIN, X_MAX);
-		fprintf(gp, "set yrange [%f:%f]\n", Y_MIN, Y_MAX);
-		fprintf(gp, "set zrange [%f:%f]\n", Z_MIN, Z_MAX);
-		fprintf(gp, "set xtics %f, %d, %f offset 0.0,-0.5,0.0\n", X_MIN, (int)((fabs(X_MIN)+fabs(X_MAX))/X_AXIS_DIV), X_MAX);
-		fprintf(gp, "set ytics %f, %d, %f\n", Y_MIN, (int)((fabs(Y_MIN)+fabs(Y_MAX))/Y_AXIS_DIV), Y_MAX);
-		fprintf(gp, "set ztics %f+0.5*i*0.05*i*0.05, %d, %.1f+0.5*i*0.05*i*0.05\n", Z_MIN, (int)((fabs(Z_MIN)+fabs(Z_MAX))/Z_AXIS_DIV), Z_MAX);
-*/
-// --------------------------------------------------------- //
 		if (LOAD_F == 1)
 		{	
 			fprintf(gp, "splot \

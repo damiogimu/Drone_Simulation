@@ -1,15 +1,11 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <math.h>
-#include "../my_val_define.h"
+#include "../my_header.h"
 
 #define PLOT_FILE1 "DATA/result_line_error"
 
 #define X_MIN 0.0
 
-#define Y_MIN 0.0
-#define Y_MAX 0.2
+#define Y_MIN -1.0
+#define Y_MAX 1.0
 
 int main(void)
 {
@@ -40,8 +36,9 @@ int main(void)
 	fprintf(gp, "set border lw 3\n");
 	fprintf(gp, "set key spacing 1.0\n");
 
-	fprintf(gp, "plot '%s' u 1:5 w l lw 3 lt 7 lc 'grey' title 'x'\n", PLOT_FILE1);
-	fprintf(gp, "replot '%s' u 1:6 w l lw 3 lt 7 lc 'orange' title 'y'\n", PLOT_FILE1);
+	fprintf(gp, "plot '%s' u 1:2 w l lw 2 lt 7 lc 'red' title 'x'\n", PLOT_FILE1);
+	fprintf(gp, "replot '%s' u 1:3 w l lw 1 lt 7 lc 'green' title 'y'\n", PLOT_FILE1);
+	fprintf(gp, "replot '%s' u 1:4 w l lw 2 lt 7 lc 'blue' title 'z'\n", PLOT_FILE1);
 
 	fflush(gp);
 	read(0, buf, 1);

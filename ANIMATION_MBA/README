@@ -1,0 +1,5 @@
+--- 1. DATA/LINE_DATAのデータ詳細 ---
+
+[time] [drone_x_pos] [drone_y_pos] [drone_z_pos] [drone_φ_angle] [drone_θ_angle] [drone_ψ_angle] [load_x_pos] [load_y_pos] [load_z_pos] [drone_desire_x] [drone_desire_y] [drone_desire_z]
+
+-------------------------------------
