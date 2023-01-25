@@ -8,7 +8,7 @@ int func(double t, double *x, double *k, int i, t_desire *des, t_integral *intg,
 	double y_dir = (cos(x[3])*sin(x[4])*sin(x[5])) - (sin(x[3])*cos(x[5]));
 	double z_dir = cos(x[3])*cos(x[4]);
 
-	double ele_ad, ele_bd, dad_nume, dbd_nume, ddad_ele1, ddad_ele2, ddbd_ele1, ddbd_ele2;
+	double ele_ad, ele_bd;
 	double Fx_d, Fy_d, Fz_d, U1_d, U2_d, U3_d, U4_d;
 
 	vertical_traj(t, des);
@@ -32,6 +32,14 @@ int func(double t, double *x, double *k, int i, t_desire *des, t_integral *intg,
 	des->ad = asin(ele_ad);
 	ele_bd = (1.0/(U1_d*cos(des->ad)))*(Fx_d*cos(des->cd) + Fy_d*sin(des->cd));
 	des->bd = asin(ele_bd);
+	des->dad = (des->ad - des->ad_old[i])/dt;
+	des->dbd = (des->bd - des->bd_old[i])/dt;
+	des->ddad = (des->dad - des->dad_old[i])/dt;
+	des->ddbd = (des->dbd - des->dbd_old[i])/dt;
+	des->ad_old[i] = des->ad;
+	des->bd_old[i] = des->bd;
+	des->dad_old[i] = des->dad;
+	des->dbd_old[i] = des->dbd;
 
 	intg->e[i][3] = des->ad - x[3];
 	intg->e[i][4] = des->bd - x[4];
@@ -42,18 +50,6 @@ int func(double t, double *x, double *k, int i, t_desire *des, t_integral *intg,
 	intg->e_old[i][3] = intg->e[i][3];
 	intg->e_old[i][4] = intg->e[i][4];
 	intg->e_old[i][5] = intg->e[i][5];
-
-	dad_nume = (Fy_d*sin(des->cd)*des->dcd + Fx_d*cos(des->cd)*des->dcd);
-	dbd_nume = (Fy_d*cos(des->cd)*des->dcd - Fx_d*sin(des->cd)*des->dcd);
-	ddad_ele1 = (Fy_d*sin(des->cd)*des->ddcd + Fx_d*cos(des->cd)*des->ddcd - Fx_d*sin(des->cd)*des->ddcd + Fy_d*cos(des->cd)*des->ddcd)/(U1_d*sqrt(1 - ele_ad*ele_ad));
-	ddad_ele2 = ((Fx_d*sin(des->cd) - Fy_d*cos(des->cd))*(Fy_d*sin(des->cd)*des->dcd + Fx_d*cos(des->cd)*des->dcd*des->dcd))/(U1_d*U1_d*U1_d*pow((1-ele_ad*ele_ad), 3.0/2.0));
-	ddbd_ele1 = (-Fx_d*sin(des->cd)*des->ddcd + Fy_d*cos(des->cd)*des->ddcd - Fy_d*sin(des->cd)*des->dcd*des->dcd - Fx_d*cos(des->cd)*des->dcd*des->dcd)/(U1_d*cos(des->cd)*sqrt(1-ele_bd*ele_bd));
-	ddbd_ele2 = ((Fy_d*sin(des->cd) + Fx_d*cos(des->cd))*(Fy_d*cos(des->cd)*des->dcd-Fx_d*sin(des->cd)*des->dcd*des->dcd))/(U1_d*U1_d*U1_d*pow((1-ele_bd*ele_bd), 3.0/2.0)*cos(des->cd)*cos(des->cd)*cos(des->cd));
-
-	des->dad = dad_nume/U1_d*(sqrt(1 - ele_ad*ele_ad));
-	des->dbd = dbd_nume/(U1_d*cos(des->cd)*sqrt(1 - ele_bd*ele_bd));
-	des->ddad = ddad_ele1 + ddad_ele2;
-	des->ddbd = ddbd_ele1 + ddbd_ele2;
 
 	U2_d = 0.0;
 	U3_d = 0.0;
@@ -141,7 +137,7 @@ int main(void)
 					ddy = (k[0][9] + 2.0*k[1][9] + 2.0*k[2][9] + k[3][9])/6.0;
 					ddz = (k[0][10] + 2.0*k[1][10] + 2.0*k[2][10] + k[3][10])/6.0;
 					fprintf(fd, "%f %f %f\n", t, x[2], des.zd);
-					if (isnan(ddx) != 0 || (3.0 <= t && 0.1 <= ddx))
+					if (isnan(ddx) != 0 || (1.0 <= t && 0.1 < fabs(des.zd-x[2])))
 					{
 						sprintf(rm_str, "rm %s", filename);
 						system(rm_str);

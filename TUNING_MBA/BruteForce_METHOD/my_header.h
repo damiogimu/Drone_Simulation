@@ -11,7 +11,7 @@
 #include <sys/stat.h>
 
 #define amax 1.0
-#define vmax 1.0
+#define vmax 0.5
 #define Xt 2.0
 #define Yt 2.0
 
@@ -51,17 +51,17 @@ typedef struct	s_gain
 }				t_gain;
 
 // --- GAIN_RANGE --- //
-#define MIN_Kpt_GAIN 5
-#define MAX_Kpt_GAIN 55
+#define MIN_Kpt_GAIN 40
+#define MAX_Kpt_GAIN 80
 #define Kpt_ITV 10
-#define MIN_Kdt_GAIN 5
-#define MAX_Kdt_GAIN 55
+#define MIN_Kdt_GAIN 10
+#define MAX_Kdt_GAIN 80
 #define Kdt_ITV 10
-#define MIN_Kpr_GAIN 5
-#define MAX_Kpr_GAIN 55
+#define MIN_Kpr_GAIN 60
+#define MAX_Kpr_GAIN 80
 #define Kpr_ITV 10
-#define MIN_Kdr_GAIN 5
-#define MAX_Kdr_GAIN 55
+#define MIN_Kdr_GAIN 70
+#define MAX_Kdr_GAIN 80
 #define Kdr_ITV 10
 // ------------------- //
 

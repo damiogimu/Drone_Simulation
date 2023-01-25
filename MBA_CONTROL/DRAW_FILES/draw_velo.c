@@ -1,12 +1,14 @@
 #include "../my_header.h"
 
-#define PLOT_FILE1 "DATA/desire_path"
-#define PLOT_FILE2 "DATA/result_line_path"
+#define PLOT_FILE1 "DATA/result_line_path"
+#define PLOT_FILE2 "DATA/desire_path"
 
 #define X_MIN 0.0
 
-#define Y_MIN -4.0
-#define Y_MAX 4.0
+#define Y_MIN -3.0
+#define Y_MAX 3.0
+
+#define X_FLAG 1 
 
 int main(void)
 {
@@ -30,8 +32,20 @@ int main(void)
 	fprintf(gp, "set border lw 3\n");
 	fprintf(gp, "set key spacing 1.5 font ',16'\n");
 
-	fprintf(gp, "plot [%f:%f] [%f:%f] '%s' u 1:8  w l lt 0 lc 'red' title 'x velo desire'\n", X_MIN, TIME, Y_MIN, Y_MAX, PLOT_FILE1);
-	fprintf(gp, "replot '%s' u 1:10  w l lc 'blue' title 'x velo real'\n", PLOT_FILE2);
+	if (X_FLAG == 1)
+	{
+		fprintf(gp, "plot [%f:%f] [%f:%f] \
+			'%s' u 1:10  w l lc 'blue' title 'x velo', \
+			'%s' u 1:8  w l lt 0 lc 'red' title 'desire', \
+			\n", X_MIN, TIME, Y_MIN, Y_MAX, PLOT_FILE1, PLOT_FILE2);
+	}
+	else
+	{
+		fprintf(gp, "plot [%f:%f] [%f:%f] \
+			'%s' u 1:11  w l lc 'blue' title 'y velo', \
+			'%s' u 1:9  w l lt 0 lc 'red' title 'desire', \
+			\n", X_MIN, TIME, Y_MIN, Y_MAX, PLOT_FILE1, PLOT_FILE2);
+	}
 
 	fflush(gp);
 	read(0, buf, 1);

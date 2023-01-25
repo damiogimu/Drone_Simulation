@@ -4,14 +4,14 @@
 #define S_T 0.0
 
 #define X_INIT_MIN -1.0
-#define X_INIT_MAX 5.0
+#define X_INIT_MAX 3.0
 #define X_ITV 1.0
 
 #define Y_INIT_MIN -1.0
-#define Y_INIT_MAX 5.0
+#define Y_INIT_MAX 3.0
 #define Y_ITV 1.0
 
-#define Z_INIT_MIN -1.0
+#define Z_INIT_MIN 0.0
 #define Z_INIT_MAX 3.0
 #define Z_ITV 0.5
 
@@ -40,13 +40,13 @@ int main(void)
 	fprintf(gp, "set yrange [%f:%f]\n", Y_INIT_MIN, Y_INIT_MAX);
 	fprintf(gp, "set zrange [%f:%f]\n", Z_INIT_MIN, Z_INIT_MAX);
 	fprintf(gp, "set xtics %f, %f, %f\n", X_INIT_MIN, X_ITV, X_INIT_MAX);
-	fprintf(gp, "set ytics %f, %f, %f\n", Y_INIT_MIN, Y_ITV, Y_INIT_MAX-1);
+	fprintf(gp, "set ytics %f, %f, %f\n", Y_INIT_MIN, Y_ITV, Y_INIT_MAX - Y_ITV);
 	fprintf(gp, "set ztics %f, %f, %f\n", Z_INIT_MIN, Z_ITV, Z_INIT_MAX);
 	fprintf(gp, "set xlabel 'x [m]' offset 0.0,-1.5,0.0\n");
 	fprintf(gp, "set ylabel 'y [m]' offset -2.0,-2.0,0.0\n");
 	fprintf(gp, "set zlabel 'z [m]' offset 1.5,0.0,0.0\n");
 	fprintf(gp, "set border lw 1\n");
-	fprintf(gp, "set view 90,360\n");
+	fprintf(gp, "set view 60,345\n");
 
 	fprintf(gp, "set term gif animate delay 5 font 'Times New Roman, 20'\n");
 	fprintf(gp, "set output 'GIF/PID_PATH.gif'\n");

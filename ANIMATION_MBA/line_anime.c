@@ -14,9 +14,9 @@
 #define Y_INIT_MAX 3.0
 #define Y_ITV 1.0
 
-#define Z_INIT_MIN -1.0
+#define Z_INIT_MIN 0.0
 #define Z_INIT_MAX 3.0
-#define Z_ITV 0.5
+#define Z_ITV 1.0
 
 #ifndef LOAD_F
 # define LOAD_F 0
@@ -49,7 +49,7 @@ int main(void)
 	fprintf(gp, "set ylabel 'y [m]' offset -1.0,-1.0,0.0\n");
 	fprintf(gp, "set zlabel 'z [m]' offset 1.5,0.0,0.0\n");
 	fprintf(gp, "set border lw 1\n");
-	fprintf(gp, "set view 90,360\n");
+	fprintf(gp, "set view 60,345\n");
 //	fprintf(gp, "set view 90,360\n");
 
 	fprintf(gp, "set term gif animate delay 5 font 'Times New Roman, 20'\n");

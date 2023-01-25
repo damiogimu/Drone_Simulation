@@ -2,8 +2,8 @@
 
 #define X_MIN 0.0
 
-#define Y_MIN -6.0
-#define Y_MAX 6.0
+#define Y_MIN -3.0
+#define Y_MAX 3.0
 
 int main(void)
 {

@@ -47,8 +47,8 @@ int main(void)
 					if ((fd = open(filename, O_RDONLY)) != -1)
 					{
 						fprintf(gp, "plot \
-								'./DATA/gain%d_%d_%d_%d' u 1:2 w l lc 'grey' title '%d %d %d %d φ',\
-								'./DATA/gain%d_%d_%d_%d' u 1:4 w l lt 0 lc 'orange' title 'θ',\
+								'./DATA/gain%d_%d_%d_%d' u 1:2 w l lc 'grey' title '%d %d %d %d x acc',\
+								'./DATA/gain%d_%d_%d_%d' u 1:4 w l lt 0 lc 'orange' title 'desire',\
 								\n", Kpt, Kdt, Kpr, Kdr, Kpt, Kdt, Kpr, Kdr, Kpt, Kdt, Kpr, Kdr);
 					}
 					close(fd);

@@ -2,8 +2,8 @@
 
 #define X_MIN 0.0
 
-#define Y_MIN -6.0
-#define Y_MAX 6.0
+#define Y_MIN -3.0
+#define Y_MAX 3.0
 
 int main(void)
 {
@@ -48,8 +48,8 @@ int main(void)
 				if ((fd = open(filename, O_RDONLY)) != -1)
 				{
 					fprintf(gp, "plot \
-							'./Z_DATA/gain_%d_%d_%d' u 1:2 w l lc 'blue' title '%d %d %d x_acc',\
-							'./Z_DATA/gain_%d_%d_%d' u 1:3 w l lt 0 lc 'red' title 'y_acc',\
+							'./Z_DATA/gain_%d_%d_%d' u 1:2 w l lc 'blue' title '%d %d %d x acc',\
+							'./Z_DATA/gain_%d_%d_%d' u 1:3 w l lt 0 lc 'red' title 'y acc',\
 							\n", Kpt, Kdt, Kit, Kpt, Kdt, Kit, Kpt, Kdt, Kit);
 				}
 				// ------------------------ //

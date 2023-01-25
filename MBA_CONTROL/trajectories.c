@@ -1,28 +1,17 @@
 #include "my_header.h"
 
+#define Z_DES 2.0
+
 void any_traj(double t, t_desire *des)
 {
-	if (t <= Z_RISE_T)
-	{
-		des->xd = 0.0;
-		des->dxd = 0.0;
-		des->ddxd = 0.0;
-		des->yd = 0.0;
-		des->dyd = 0.0;
-		des->ddyd = 0.0;
-	}
-	else
-	{
-		t -= Z_RISE_T;
-		des->xd = (amax*t*t)/2.0;
-		des->dxd = amax*t;
-		des->ddxd = amax;
-		des->yd = 0.0;
-		des->dyd = 0.0;
-		des->ddyd = 0.0;
-	}
+	des->xd = 0.0;
+	des->dxd = 0.0;
+	des->ddxd = 0.0;
+	des->yd = 0.0;
+	des->dyd = 0.0;
+	des->ddyd = 0.0;
 	des->zd = 2.0;
-	des->dzd = 0.0;
+	des->dzd = Z_DES;
 	des->ddzd = 0.0;
 	des->zd += 1.0e-8;
 	des->cd = 0.0;
@@ -50,9 +39,9 @@ void noncontrol_traj1(double t, t_desire *des)
 		des->xd = (amax*t*t)/2.0;
 		des->dxd = amax*t;
 		des->ddxd = amax;
-		des->yd = 0.0;
-		des->dyd = 0.0;
-		des->ddyd = 0.0;
+		des->yd = (amax*t*t)/2.0;
+		des->dyd = amax*t;
+		des->ddyd = amax;
 	}
 	else
 	{
@@ -60,11 +49,11 @@ void noncontrol_traj1(double t, t_desire *des)
 		des->xd = amax*T*t + (amax*T*T)/2.0;
 		des->dxd = amax*T;
 		des->ddxd = 0.0;
-		des->yd = 0.0;
-		des->dyd = 0.0;
+		des->yd = amax*T*t + (amax*T*T)/2.0;
+		des->dyd = amax*T;
 		des->ddyd = 0.0;
 	}
-	des->zd = 2.0;
+	des->zd = Z_DES;
 	des->dzd = 0.0;
 	des->ddzd = 0.0;
 	des->zd += 1.0e-8;
@@ -97,9 +86,9 @@ void controled_traj1(double t, double f, t_desire *des)
 		des->xd = (amax*t*t)/2.0;
 		des->dxd = amax*t;
 		des->ddxd = amax;
-		des->yd = 0.0;
-		des->dyd = 0.0;
-		des->ddyd = 0.0;
+		des->yd = (amax*t*t)/2.0;
+		des->dyd = amax*t;
+		des->ddyd = amax;
 	}
 	else if (t < Z_RISE_T+T1+dT)
 	{
@@ -107,8 +96,8 @@ void controled_traj1(double t, double f, t_desire *des)
 		des->xd = amax*T1*t + (amax*T1*T1)/2.0;
 		des->dxd = amax*T1;
 		des->ddxd = 0.0;
-		des->yd = 0.0;
-		des->dyd = 0.0;
+		des->yd = amax*T1*t + (amax*T1*T1)/2.0;
+		des->dyd = amax*T1;
 		des->ddyd = 0.0;
 	}
 	else if (t < Z_RISE_T+T+dT)
@@ -117,9 +106,9 @@ void controled_traj1(double t, double f, t_desire *des)
 		des->xd = (amax*t*t)/2.0 + amax*T1*t + amax*T1*dT + (amax*T1*T1)/2.0;
 		des->dxd = amax*t + amax*T1;
 		des->ddxd = amax;
-		des->yd = 0.0;
-		des->dyd = 0.0;
-		des->ddyd = 0.0;
+		des->yd = (amax*t*t)/2.0 + amax*T1*t + amax*T1*dT + (amax*T1*T1)/2.0;
+		des->dyd = amax*t + amax*T1;
+		des->ddyd = amax;
 	}
 	else
 	{
@@ -127,11 +116,11 @@ void controled_traj1(double t, double f, t_desire *des)
 		des->xd = 2.0*amax*T1*t + (amax*T1*T1)/2.0 + amax*T1*T1 + amax*T1*dT + (amax*T1*T1)/2.0;
 		des->dxd = 2.0*amax*T1;
 		des->ddxd = 0.0;
-		des->yd = 0.0;
-		des->dyd = 0.0;
+		des->yd = 2.0*amax*T1*t + (amax*T1*T1)/2.0 + amax*T1*T1 + amax*T1*dT + (amax*T1*T1)/2.0;
+		des->dyd = 2.0*amax*T1;
 		des->ddyd = 0.0;
 	}
-	des->zd = 2.0;
+	des->zd = Z_DES;
 	des->dzd = 0.0;
 	des->ddzd = 0.0;
 	des->zd += 1.0e-8;
@@ -207,7 +196,7 @@ void noncontrol_traj2(double t, t_desire *des)
 		des->dyd = 0.0;
 		des->ddyd = 0.0;
 	}
-	des->zd = 2.0;
+	des->zd = Z_DES;
 	des->dzd = 0.0;
 	des->ddzd = 0.0;
 	des->zd += 1.0e-8;
@@ -302,7 +291,7 @@ void controled_traj2(double t, double f, t_desire *des)
 		des->dyd = -amax*T1y + amax*T1y;
 		des->ddyd = 0.0;
 	}
-	des->zd = 2.0;
+	des->zd = Z_DES;
 	des->dzd = 0.0;
 	des->ddzd = 0.0;
 	des->zd += 1.0e-8;

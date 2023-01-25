@@ -127,7 +127,7 @@ int main(void)
 						ddy = (k[0][9] + 2.0*k[1][9] + 2.0*k[2][9] + k[3][9])/6.0;
 						ddz = (k[0][10] + 2.0*k[1][10] + 2.0*k[2][10] + k[3][10])/6.0;
 						fprintf(fd, "%f %f %f %f %f\n", t, ddx, ddy, des.ddxd, des.ddyd);
-						if (isnan(ddx) != 0)
+						if (isnan(ddx) != 0 || (4.5 <= t && 0.1 <= ddx))
 						{
 							sprintf(rm_str, "rm %s", filename);
 							system(rm_str);

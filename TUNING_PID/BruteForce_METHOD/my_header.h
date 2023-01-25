@@ -18,7 +18,7 @@
 #define TIME 5.0
 #define INIT_X 0.0
 #define INIT_Y 0.0
-#define INIT_Z 2.0
+#define INIT_Z 1.0
 
 #define Z_RISE_T 1.0
 #define RK4_SIZE 4
@@ -60,33 +60,33 @@ typedef struct	s_gain
 
 // --- GAIN_RANGE --- //
 #define MIN_Pt_GAIN 5
-#define MAX_Pt_GAIN 80
+#define MAX_Pt_GAIN 30
 #define Pt_ITV 10
 #define MIN_Dt_GAIN 5
-#define MAX_Dt_GAIN 80
+#define MAX_Dt_GAIN 30
 #define Dt_ITV 5
 #define MIN_It_GAIN 5
-#define MAX_It_GAIN 80
+#define MAX_It_GAIN 30
 #define It_ITV 5
 
 #define MIN_Pz_GAIN 10
-#define MAX_Pz_GAIN 120
+#define MAX_Pz_GAIN 80
 #define Pz_ITV 10
 #define MIN_Dz_GAIN 5
-#define MAX_Dz_GAIN 50
-#define Dz_ITV 5
+#define MAX_Dz_GAIN 55
+#define Dz_ITV 10
 #define MIN_Iz_GAIN 5
-#define MAX_Iz_GAIN 50
-#define Iz_ITV 5
+#define MAX_Iz_GAIN 55
+#define Iz_ITV 10
 
-#define MIN_Pr_GAIN 5
+#define MIN_Pr_GAIN 40
 #define MAX_Pr_GAIN 80
-#define Pr_ITV 5
+#define Pr_ITV 10
 #define MIN_Dr_GAIN 5
-#define MAX_Dr_GAIN 80
+#define MAX_Dr_GAIN 30
 #define Dr_ITV 5
 #define MIN_Ir_GAIN 5
-#define MAX_Ir_GAIN 80
+#define MAX_Ir_GAIN 30
 #define Ir_ITV 5
 // ------------------- //
 

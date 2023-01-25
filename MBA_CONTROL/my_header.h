@@ -9,13 +9,13 @@
 #include <stdlib.h>
 #include <math.h>
 
-#define amax 3.0
-#define vmax 3.0
+#define amax 1.0
+#define vmax 0.5
 #define Xt 2.0
-#define Yt 0.0
+#define Yt 2.0
 
-#define TIME 8.0
-#define Z_RISE_T 0.0
+#define TIME 7.0
+#define Z_RISE_T 1.0
 #define INIT_X 0.0
 #define INIT_Y 0.0
 #define INIT_Z 2.0
@@ -44,10 +44,10 @@ typedef struct	s_rotor
 }				t_rotor;
 
 // --- CONTROLER GAIN VALS --- //
-#define Kpt 15
-#define Kdt 15
-#define Kpr 15
-#define Kdr 55
+#define Kpt 70
+#define Kdt 50
+#define Kpr 70
+#define Kdr 70
 // ------------------------- //
 
 // ---- PARAMETERS ---- //
@@ -57,6 +57,7 @@ typedef struct	s_rotor
 #define Iyy 7.5e-3
 #define Izz 1.3e-2
 
+#define SCALE 1.0
 #define l 0.232			// プロペラ中心と質量中心の距離
 #define r 1.0 			// ケーブルの長さ
 #define Ct 0.07428
@@ -70,14 +71,13 @@ typedef struct	s_rotor
 // ------------------ //
 
 // --- OUTPUT DATA FILES --- //
-#define FD_NUM 8
+#define FD_NUM 7
 #define PATH_FILE "DATA/result_line_path"
 #define ERROR_FILE "DATA/result_line_error"
 #define ANI_PATH_FILE "../ANIMATION_MBA/DATA/path_DATA"
 #define ANI_CABLE_FILE "../ANIMATION_MBA/DATA/cable_DATA"
 #define ANI_XROTOR_FILE "../ANIMATION_MBA/DATA/xrotor_DATA"
 #define ANI_YROTOR_FILE "../ANIMATION_MBA/DATA/yrotor_DATA"
-#define THRUST_TORQU "DATA/rotor_thrust_and_torqu"
 #define DESIRE_FILE "DATA/desire_path"
 // ------------------------ //
 
@@ -89,6 +89,8 @@ void	controled_traj2(double t, double f, t_desire *des);
 
 int		setup(double ***state, double ***k, FILE **fd);
 void	init(double **k, t_rotor *rot, t_desire *des);
+void	output_data1(double t, double *x, FILE **fd, t_rotor *rot);
+void	output_data2(double t, double *x, double **k, FILE **fd, t_rotor *rot, t_desire *des);
 void	my_free(int rev_f, int size, double **ptr);
 void	my_fclose(int rev_f, int size, FILE **fd);
 

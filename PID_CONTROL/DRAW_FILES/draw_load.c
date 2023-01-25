@@ -3,13 +3,6 @@
 #define PLOT_FILE "DATA/result_line_path"
 #define DESIRE_FILE "DATA/desire_path"
 
-#ifndef ATTI_F
-# define ATTI_F 0
-#endif
-#ifndef REF_DATA
-# define REF_DATA 9
-#endif
-
 #define DATA_LABEL "angle [rad]"
 #define X_MIN 0.0
 #define X_ITV 1.0
@@ -39,19 +32,10 @@ int main(void)
 	fprintf(gp, "set border lw 3\n");
 	fprintf(gp, "set key spacing 1.5 font ',16'\n");
 
-	if (ATTI_F == 1)
-	{
-		fprintf(gp, "plot [0.0:%f][-1.5:1.5]\
-				'%s' u 1:6 w l lw 2 lt 7 lc 'blue' title 'θ', \
-				'%s' u 1:2 w l lt 0 lc 'grey' title 'desire x acc', \
-				'%s' u 1:15 w l lt 0 lc 'red' title 'desire θ', \
-				\n", TIME, PLOT_FILE, DESIRE_FILE, DESIRE_FILE);
-	}
-	else
-		fprintf(gp, "plot [0.0:%f][-1.5:1.5]\
-				'%s' u 1:8 w l lw 2 lt 7 lc 'dark-orange' title 'γ', \
-				'%s' u 1:9 w l lw 1 lt 7 lc 'grey' title 'β', \
-				\n", TIME, PLOT_FILE, PLOT_FILE);
+	fprintf(gp, "plot [0.0:%f][-1.5:1.5]\
+			'%s' u 1:8 w l lw 2.0 lt 7 lc 'dark-orange' title 'γ', \
+			'%s' u 1:9 w l lw 1.0 lt 7 lc 'grey' title 'β', \
+			\n", TIME, PLOT_FILE, PLOT_FILE);
 
 	fflush(gp);
 	read(0, buf, 1);
