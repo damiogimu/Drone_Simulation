@@ -9,13 +9,15 @@
 #define amax 1.0	// 最大加速度
 #define vmax 0.5	// 終端速度
 #define Xt 2.0		// 終端位置 x
-#define Yt 2.0		// 終端位置 y
+#define Yt 0.0		// 終端位置 y
 
 #define TIME 7.0
-#define Z_RISE_T 1.0
+#define Z_RISE_T 2.0
+#define Z_DES 2.0
+
 #define INIT_X 0.0
 #define INIT_Y 0.0
-#define INIT_Z 2.0
+#define INIT_Z 1.0
 
 #define RK4_SIZE 4
 #define X_NUM 16
@@ -41,11 +43,11 @@ typedef struct	s_desire
 
 typedef struct	s_rotor
 {
-	double T1, T2, T3, T4;
-	double coefi;
-	double l_x1, l_x2;
-	double l_y1, l_y2;
-	double l_z1, l_z2;
+	double	T1, T2, T3, T4;
+	double	coefi;
+	double	l_x1, l_x2;
+	double	l_y1, l_y2;
+	double	l_z1, l_z2;
 }				t_rotor;
 
 // --- CONTROLER GAIN VALS --- //
@@ -86,10 +88,10 @@ typedef struct	s_rotor
 #define FD_NUM 7
 #define PATH_FILE "DATA/result_line_path"
 #define ERROR_FILE "DATA/result_line_error"
-#define ANI_PATH_FILE "../ANIMATION_PID/DATA/path_DATA"
-#define ANI_CABLE_FILE "../ANIMATION_PID/DATA/cable_DATA"
-#define ANI_XROTOR_FILE "../ANIMATION_PID/DATA/xrotor_DATA"
-#define ANI_YROTOR_FILE "../ANIMATION_PID/DATA/yrotor_DATA"
+#define ANI_PATH_FILE "DATA/path_DATA"
+#define ANI_CABLE_FILE "DATA/cable_DATA"
+#define ANI_XROTOR_FILE "DATA/xrotor_DATA"
+#define ANI_YROTOR_FILE "DATA/yrotor_DATA"
 #define DESIRE_FILE "DATA/desire_path"
 // ------------------------ //
 

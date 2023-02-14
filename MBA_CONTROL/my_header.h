@@ -2,9 +2,6 @@
 # define MY_HEADER_H
 
 #include <unistd.h>
-#include <fcntl.h>
-#include <sys/types.h>
-#include <sys/stat.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
@@ -12,10 +9,12 @@
 #define amax 1.0
 #define vmax 0.5
 #define Xt 2.0
-#define Yt 2.0
+#define Yt 0.0
 
 #define TIME 7.0
 #define Z_RISE_T 1.0
+#define Z_DES 2.0
+
 #define INIT_X 0.0
 #define INIT_Y 0.0
 #define INIT_Z 2.0
@@ -74,10 +73,10 @@ typedef struct	s_rotor
 #define FD_NUM 7
 #define PATH_FILE "DATA/result_line_path"
 #define ERROR_FILE "DATA/result_line_error"
-#define ANI_PATH_FILE "../ANIMATION_MBA/DATA/path_DATA"
-#define ANI_CABLE_FILE "../ANIMATION_MBA/DATA/cable_DATA"
-#define ANI_XROTOR_FILE "../ANIMATION_MBA/DATA/xrotor_DATA"
-#define ANI_YROTOR_FILE "../ANIMATION_MBA/DATA/yrotor_DATA"
+#define ANI_PATH_FILE "DATA/path_DATA"
+#define ANI_CABLE_FILE "DATA/cable_DATA"
+#define ANI_XROTOR_FILE "DATA/xrotor_DATA"
+#define ANI_YROTOR_FILE "DATA/yrotor_DATA"
 #define DESIRE_FILE "DATA/desire_path"
 // ------------------------ //
 

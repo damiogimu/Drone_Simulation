@@ -14,8 +14,8 @@ int func(double t, double *x, double *k, int i, t_rotor *rot, t_desire *des)
 //	any_traj(t, des);
 //	noncontrol_traj1(t, des);
 //	controled_traj1(t, f, des);
-//	noncontrol_traj2(t, des);
-	controled_traj2(t, f, des);
+	noncontrol_traj2(t, des);
+//	controled_traj2(t, f, des);
 
 	ctm_x = des->ddxd + Kdt*(des->dxd-x[8]) + Kpt*(des->xd-x[0]);
 	ctm_y = des->ddyd + Kdt*(des->dyd-x[9]) + Kpt*(des->yd-x[1]);
@@ -84,7 +84,7 @@ int main(void)
 	init(k, &rot, &des);
 
 	t = 0.0;
-	while (t <= TIME)
+	while (t <= (TIME+dt))
 	{
 		output_data1(t, x, fd, &rot);
 		i = 0;

@@ -1,4 +1,4 @@
-#include "../PID_CONTROL/my_header.h"
+#include "../my_header.h"
 
 #define INTERVAL 0.05
 #define S_T 0.0
@@ -14,10 +14,6 @@
 #define Z_INIT_MIN 0.0
 #define Z_INIT_MAX 3.0
 #define Z_ITV 0.5
-
-#ifndef LOAD_F
-# define LOAD_F 0
-#endif
 
 int main(void)
 {
@@ -49,33 +45,30 @@ int main(void)
 	fprintf(gp, "set view 60,345\n");
 
 	fprintf(gp, "set term gif animate delay 5 font 'Times New Roman, 20'\n");
-	fprintf(gp, "set output 'GIF/PID_PATH.gif'\n");
+	fprintf(gp, "set output 'GIF/3D_ANIMATION.gif'\n");
 
 	while (t <= TIME)
 	{
-		if (LOAD_F == 1)
-		{	
-			fprintf(gp, "splot \
-					'DATA/xrotor_DATA' index %d u 2:3:4 w l lc 'blue', \
-					'DATA/yrotor_DATA' index %d u 2:3:4 w l lc 'blue', \
-					'DATA/cable_DATA' index %d u 2:3:4 w l lc 'black', \
-					'DATA/path_DATA' every ::0::%d u 2:3:4 w l lw 0.7 lc 'blue',\
-					'DATA/path_DATA' every ::%d::%d u 2:3:4 with points pt 13 ps 1.0 lc 'blue',\
-					'DATA/path_DATA' every ::0::%d u 8:9:10 w l lw 0.7 lc 'green',\
-					'DATA/path_DATA' every ::%d::%d u 8:9:10 with points pt 7 ps 1.5 lc 'green',\
-					'DATA/path_DATA' u 11:12:13 w l lt 0 lc 'red',\
-					\n", i, i, i, i, i, i, i, i, i);
-		}
-		else
-		{
-			fprintf(gp, "splot \
-					'DATA/xrotor_DATA' index %d u 2:3:4 w l lc 'blue', \
-					'DATA/yrotor_DATA' index %d u 2:3:4 w l lc 'blue', \
-					'DATA/path_DATA' every ::0::%d u 2:3:4 w l lw 0.7 lc 'blue',\
-					'DATA/path_DATA' every ::%d::%d u 2:3:4 with points pt 13 ps 1.0 lc 'blue',\
-					'DATA/path_DATA' u 11:12:13 w l lt 0 lc 'red',\
-					\n", i, i, i, i, i);
-		}
+		fprintf(gp, "splot \
+				'DATA/xrotor_DATA' index %d u 2:3:4 w l lw 2.0 lc 'blue', \
+				'DATA/yrotor_DATA' index %d u 2:3:4 w l lw 2.0 lc 'blue', \
+				'DATA/cable_DATA' index %d u 2:3:4 w l lc 'black', \
+				'DATA/path_DATA' every ::%d::%d u 2:3:4 with points pt 13 ps 2.0 lc 'blue',\
+				'DATA/path_DATA' every ::%d::%d u 8:9:10 with points pt 7 ps 2.0 lc 'green',\
+				'DATA/path_DATA' u 11:12:13 w l lw 1.5 lt 0 lc 'red',\
+				\n", i, i, i, i, i, i, i);
+/*
+		fprintf(gp, "splot \
+				'DATA/xrotor_DATA' index %d u 2:3:4 w l lc 'blue', \
+				'DATA/yrotor_DATA' index %d u 2:3:4 w l lc 'blue', \
+				'DATA/cable_DATA' index %d u 2:3:4 w l lc 'black', \
+				'DATA/path_DATA' every ::0::%d u 2:3:4 w l lw 0.7 lc 'blue',\
+				'DATA/path_DATA' every ::%d::%d u 2:3:4 with points pt 13 ps 1.0 lc 'blue',\
+				'DATA/path_DATA' every ::0::%d u 8:9:10 w l lw 0.7 lc 'green',\
+				'DATA/path_DATA' every ::%d::%d u 8:9:10 with points pt 7 ps 1.5 lc 'green',\
+				'DATA/path_DATA' u 11:12:13 w l lt 0 lc 'red',\
+				\n", i, i, i, i, i, i, i, i, i);
+*/
 		i++;
 		t += INTERVAL;
 	}

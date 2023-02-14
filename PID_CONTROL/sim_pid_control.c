@@ -6,7 +6,6 @@ int func(double t, double *x, double *k, int i, t_rotor *rot, t_desire *des, t_i
 	double x_dir = (cos(x[3])*sin(x[4])*cos(x[5])) + (sin(x[3])*sin(x[5]));
 	double y_dir = (cos(x[3])*sin(x[4])*sin(x[5])) - (sin(x[3])*cos(x[5]));
 	double z_dir = cos(x[3])*cos(x[4]);
-
 	double ele_ad, ele_bd;
 	double Fx_d, Fy_d, Fz_d, U1_d, U2_d, U3_d, U4_d;
 
@@ -101,7 +100,7 @@ int main(void)
 	init(k, &intg, &des, &rot);
 
 	t = 0.0;
-	while (t <= TIME)
+	while (t <= (TIME+dt))
 	{
 		output_data1(t, x, fd, &rot);
 		i = 0;

@@ -9,13 +9,17 @@ P_OBJ_VELO=DRAW_FILES/draw_velo.o
 P_OBJ_POS=DRAW_FILES/draw_pos.o
 P_OBJ_ATTITUDE=DRAW_FILES/draw_attitude.o
 P_OBJ_LOAD=DRAW_FILES/draw_load.o
+3D_GIF_OBJ=DRAW_FILES/3d_anime.o
+2D_GIF_OBJ=DRAW_FILES/2d_anime.o
 
 CALC=calc
-PLOT_ACC=lacc
-PLOT_VELO=lvelo
-PLOT_POS=lpos
-PLOT_ATTITUDE=latti
-PLOT_PAYLOAD=lpayload
+PLOT_ACC=p_acc
+PLOT_VELO=p_velo
+PLOT_POS=p_pos
+PLOT_ATTITUDE=p_atti
+PLOT_PAYLOAD=p_load
+PLOT_GIF_3d=3d
+PLOT_GIF_2d=2d
 
 $(CALC): $(OBJS)
 	$(CC) -o $@ $^ -lm	
@@ -38,7 +42,7 @@ $(PLOT_POS): $(P_OBJ_POS)
 	rm -f $@ $^
 
 $(PLOT_ATTITUDE): $(P_OBJ_ATTITUDE)
-	$(CC) -D ATTI_F=1 -o $@ $^
+	$(CC) -o $@ $^
 	./$@
 	rm -f $@ $^
 
@@ -46,6 +50,20 @@ $(PLOT_PAYLOAD): $(P_OBJ_LOAD)
 	$(CC) -o $@ $^
 	./$@
 	rm -f $@ $^
+
+$(PLOT_GIF_3d): $(3D_GIF_OBJ)
+	$(CC) $(CFLAGS) -o $@ $^
+	./$@
+	rm -f $@ $^
+
+$(PLOT_GIF_2d): $(2D_GIF_OBJ)
+	$(CC) $(CFLAGS) -o $@ $^
+	./$@
+	rm -f $@ $^
+
+clean:
+	rm -f $(OBJS)
+	rm -f DATA/*
 
 %.o:%.c $(HEADER)
 	$(CC) $(CFLAGS) -c -o $@ $< 
