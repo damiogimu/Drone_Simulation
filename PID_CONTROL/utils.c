@@ -54,7 +54,7 @@ void my_fclose(int rev_f, int size, FILE **fd)
 
 int setup(double ***state, double ***k, FILE **fd)
 {
-	char output_files[FD_NUM][100]={PATH_FILE, ERROR_FILE, ANI_PATH_FILE, ANI_CABLE_FILE, ANI_XROTOR_FILE, ANI_YROTOR_FILE, DESIRE_FILE};
+	char output_files[FD_NUM][100]={PATH_FILE, ERROR_FILE, ANI_PATH_FILE, ANI_CABLE_FILE, ANI_XROTOR_FILE, ANI_YROTOR_FILE, DESIRE_FILE, ACCTIME_FILE};
 	int i;
 	i = 0;
 	while (i < FD_NUM)
@@ -97,6 +97,8 @@ void init(double **k, t_integral *intg, t_desire *des, t_rotor *rot)
 	int i, j;
 
 	rot->coefi = (Cq/Ct)*(R/M_PI);
+	des->ACC_T = 0.0;
+	des->acc_t_f = 1;
 	i = 0;
 	while (i < RK4_SIZE)
 	{
@@ -129,7 +131,7 @@ void output_data1(double t, double *x, FILE **fd, t_rotor *rot)
 	x_p = x[0] + r*cos(x[7])*sin(x[6]);
 	y_p = x[1] + r*sin(x[7]);
 	z_p = x[2] - r*cos(x[7])*cos(x[6]);
-	fprintf(fd[0], "%f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f\n", \
+	fprintf(fd[0], "%f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f ", \
 					t,x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7],x[8],x[9],x[10],x[11],x[12], \
 					x[13],x[14],x[15],x_p,y_p,z_p);
 	if ((int)((t*1000000.0)+0.5)%50000 == 0)
@@ -166,8 +168,14 @@ void output_data2(double t, double *x, double **k, FILE **fd, t_rotor *rot, t_de
 	ddx = (k[0][8] + 2.0*k[1][8] + 2.0*k[2][8] + k[3][8])/6.0;
 	ddy = (k[0][9] + 2.0*k[1][9] + 2.0*k[2][9] + k[3][9])/6.0;
 	ddz = (k[0][10] + 2.0*k[1][10] + 2.0*k[2][10] + k[3][10])/6.0;
-	fprintf(fd[6], "%f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f\n", t, des->ddxd, des->ddyd, des->ddzd, ddx, ddy, ddz, des->dxd, des->dyd, des->dzd, des->xd, des->yd, des->zd, des->ad, des->bd, des->cd);
+	fprintf(fd[0], "%f %f %f\n", ddx, ddy, ddz);
+	fprintf(fd[6], "%f %f %f %f %f %f %f %f %f %f %f %f %f\n", t, des->ddxd, des->ddyd, des->ddzd, des->dxd, des->dyd, des->dzd, des->xd, des->yd, des->zd, des->ad, des->bd, des->cd);
 	if ((int)((t*1000000.0)+0.5)%50000 == 0)
 		fprintf(fd[2], " %f %f %f\n", des->xd, des->yd, des->zd);
-	fprintf(fd[1], "%f %f %f %f ", t, (des->xd-x[0]), (des->yd-x[1]), (des->zd-x[2]));
+	fprintf(fd[1], "%f %f %f %f\n", t, (des->xd-x[0]), (des->yd-x[1]), (des->zd-x[2]));
+	if (des->acc_t_f == 1)
+	{
+		fprintf(fd[7], "%f\n", des->ACC_T);
+		des->acc_t_f = 0;
+	}
 }

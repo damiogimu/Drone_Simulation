@@ -2,19 +2,20 @@
 # define MY_HEADER_H
 
 #include <unistd.h>
+#include <fcntl.h>
+#include <sys/types.h>
+#include <sys/stat.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
 
 #define amax 1.0
-#define vmax 0.5
+#define vmax 1.0
 #define Xt 2.0
 #define Yt 0.0
 
-#define TIME 7.0
-#define Z_RISE_T 1.0
-#define Z_DES 2.0
-
+#define TIME 14.0
+#define Z_RISE_T 2.0
 #define INIT_X 0.0
 #define INIT_Y 0.0
 #define INIT_Z 2.0
@@ -25,6 +26,8 @@
 
 typedef struct	s_desire
 {
+	int		acc_t_f;
+	double	ACC_T;
 	double	xd, dxd, ddxd;
 	double	yd, dyd, ddyd;
 	double	zd, dzd, ddzd;
@@ -42,7 +45,7 @@ typedef struct	s_rotor
 	double l_z1, l_z2;
 }				t_rotor;
 
-// --- CONTROLER GAIN VALS --- //
+// --- CONTRLER GAIN VALS --- //
 #define Kpt 70
 #define Kdt 50
 #define Kpr 70
@@ -70,14 +73,15 @@ typedef struct	s_rotor
 // ------------------ //
 
 // --- OUTPUT DATA FILES --- //
-#define FD_NUM 7
-#define PATH_FILE "DATA/result_line_path"
-#define ERROR_FILE "DATA/result_line_error"
-#define ANI_PATH_FILE "DATA/path_DATA"
-#define ANI_CABLE_FILE "DATA/cable_DATA"
-#define ANI_XROTOR_FILE "DATA/xrotor_DATA"
-#define ANI_YROTOR_FILE "DATA/yrotor_DATA"
-#define DESIRE_FILE "DATA/desire_path"
+#define FD_NUM 8
+#define PATH_FILE "DATA/result"
+#define ERROR_FILE "DATA/error"
+#define ANI_PATH_FILE "DATA/GIF_path"
+#define ANI_CABLE_FILE "DATA/GIF_cable"
+#define ANI_XROTOR_FILE "DATA/GIF_xrotor"
+#define ANI_YROTOR_FILE "DATA/GIF_yrotor"
+#define DESIRE_FILE "DATA/desire"
+#define ACCTIME_FILE "DATA/acc_time"
 // ------------------------ //
 
 void	any_traj(double t, t_desire *des);
@@ -85,14 +89,26 @@ void	noncontrol_traj1(double t, t_desire *des);
 void	noncontrol_traj2(double t, t_desire *des);
 void	controled_traj1(double t, double f, t_desire *des);
 void	controled_traj2(double t, double f, t_desire *des);
-
 int		setup(double ***state, double ***k, FILE **fd);
 void	init(double **k, t_rotor *rot, t_desire *des);
 void	output_data1(double t, double *x, FILE **fd, t_rotor *rot);
 void	output_data2(double t, double *x, double **k, FILE **fd, t_rotor *rot, t_desire *des);
 void	my_free(int rev_f, int size, double **ptr);
 void	my_fclose(int rev_f, int size, FILE **fd);
-
 int		func(double t, double *x, double *k, int i, t_rotor *rot, t_desire *des);
 
+// --- GET_NEXT_LINE --- //
+#ifndef BUFFER_SIZE
+# define BUFFER_SIZE 100
+#endif
+size_t	gnl_strlen(char *str);
+int		gnl_strjoin(char **line, char *src, size_t n);
+char	*gnl_strdup(char **src, size_t newl_p);
+int		free_all(char **line, char **buf, char **tmp);
+size_t	search_newline(char *buf, size_t *i);
+int		get_line_from_tmp(char **line, char **tmp);
+int		read_final_line(char **buf);
+ssize_t	gnl_read(int fd, char **line, char **tmp);
+int		get_next_line(int fd, char **line);
+// --------------------- //
 #endif
