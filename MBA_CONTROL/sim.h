@@ -96,8 +96,8 @@ void	output_data2(double t, double *x, double **k, FILE **fd, t_rotor *rot, t_de
 void	my_free(int rev_f, int size, double **ptr);
 void	my_fclose(int rev_f, int size, FILE **fd);
 int		func(double t, double *x, double *k, int i, t_rotor *rot, t_desire *des);
+int		get_next_line(int fd, char **line);
 
-// --- GET_NEXT_LINE --- //
 #ifndef BUFFER_SIZE
 # define BUFFER_SIZE 100
 #endif
@@ -109,6 +109,4 @@ size_t	search_newline(char *buf, size_t *i);
 int		get_line_from_tmp(char **line, char **tmp);
 int		read_final_line(char **buf);
 ssize_t	gnl_read(int fd, char **line, char **tmp);
-int		get_next_line(int fd, char **line);
-// --------------------- //
 #endif

@@ -1,4 +1,4 @@
-#include "../my_header.h"
+#include "../sim.h"
 
 size_t	gnl_strlen(char *str)
 {

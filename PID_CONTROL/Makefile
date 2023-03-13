@@ -1,39 +1,42 @@
 CC=gcc
 CFLAGS=-Wall
 
-HEADER=my_header.h
+PFILE_DIR=Disp_files
+DATA_DIR=Data
+GRAPH_DIR=Graphs
+
+HEADER=sim.h
 OBJS=main.o trajectories.o utils.o
-PLOT_OBJ=GNUPLOT_FILES/plot_data.o GNUPLOT_FILES/get_next_line.o GNUPLOT_FILES/get_next_line_utils.o
-3D_GIF_OBJ=GNUPLOT_FILES/3d_anime.o
-2D_GIF_OBJ=GNUPLOT_FILES/2d_anime.o
+PLOT_OBJ=$(PFILE_DIR)/plot_data.o $(PFILE_DIR)/get_next_line.o $(PFILE_DIR)/get_next_line_utils.o
+3D_GIF_OBJ=$(PFILE_DIR)/3d_anime.o
+2D_GIF_OBJ=$(PFILE_DIR)/2d_anime.o
 
-CALC=calc
-PLOT_DATA=pdf
-PLOT_GIF_3d=3d
-PLOT_GIF_2d=2d
-
-$(CALC): $(OBJS)
+calc: $(OBJS)
 	$(CC) -o $@ $^ -lm
 	./$@
 	rm $@
 
-$(PLOT_DATA): $(PLOT_OBJ)
+plot: $(PLOT_OBJ)
 	$(CC) -o $@ $^
 	./$@
-	rm $@ $^	
+	rm $@ $^
 
-$(PLOT_GIF_3d): $(3D_GIF_OBJ)
+3d: $(3D_GIF_OBJ)
 	$(CC) -o $@ $^
 	./$@
 	rm -f $@ $^
 
-$(PLOT_GIF_2d): $(2D_GIF_OBJ)
+2d: $(2D_GIF_OBJ)
 	$(CC) -o $@ $^
 	./$@
 	rm -f $@ $^
 
 clean:
 	rm -f $(OBJS)
+
+fclean: clean
+	rm -f $(DATA_DIR)/*
+	rm -f $(GRAPH_DIR)/*
 
 %.o:%.c $(HEADER)
 	$(CC) $(CFLAGS) -c -o $@ $<

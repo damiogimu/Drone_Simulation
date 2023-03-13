@@ -1,4 +1,4 @@
-#include "my_header.h"
+#include "sim.h"
 
 int func(double t, double *x, double *k, int i, t_rotor *rot, t_desire *des)
 {

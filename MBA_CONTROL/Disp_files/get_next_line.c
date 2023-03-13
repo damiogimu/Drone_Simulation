@@ -1,4 +1,4 @@
-#include "../my_header.h"
+#include "../sim.h"
 
 size_t	search_newline(char *buf, size_t *i)
 {

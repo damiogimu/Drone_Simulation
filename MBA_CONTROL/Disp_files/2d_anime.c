@@ -1,4 +1,4 @@
-#include "../my_header.h"
+#include "../sim.h"
 
 #define INTERVAL 0.05
 

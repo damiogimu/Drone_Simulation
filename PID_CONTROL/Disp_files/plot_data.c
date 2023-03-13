@@ -1,9 +1,21 @@
-#include "../my_header.h"
+#include "../sim.h"
 
 #define X_MIN 0.0
 #define X_ITV 1.0
 
 #define PDF_NUM 4
+#define ACC_F "Graphs/acc.pdf"
+#define VELO_F "Graphs/velo.pdf"
+#define POS_F "Graphs/pos.pdf"
+#define ATTI_F "Graphs/attitude.pdf"
+#define LOAD_F "Graphs/load_gamma.pdf"
+
+#define LABEL_ACC "Acceleration [m/s^2]"
+#define LABEL_VELO "Velocity [m/s]"
+#define LABEL_POS "Postion [m]"
+#define LABEL_ANGLE "Angle [rad]"
+
+#define ACC_T_FILE "Data/acc_time"
 
 #define COL_X_ACC 21
 #define COL_X_VELO 10
@@ -19,8 +31,8 @@ int main(void)
 {
 	FILE *gp;
 	char *line;
-	char pdf_file_name[PDF_NUM][50]={"PDF_IMAGES/acc.pdf","PDF_IMAGES/velo.pdf","PDF_IMAGES/pos.pdf","PDF_IMAGES/attitude.pdf"};
-	char label_name[PDF_NUM][30]={"Acceleration [m/s^2]", "Velocity [m/s]", "Postion [m]", "Angle [rad]"};
+	char pdf_file_name[PDF_NUM][50]={ACC_F,VELO_F,POS_F,ATTI_F};
+	char label_name[PDF_NUM][30]={LABEL_ACC,LABEL_VELO,LABEL_POS,LABEL_ANGLE};
 	char data_title[PDF_NUM][10]={"x acc", "x velo", "x pos", "theta"};
 	int i;
 	int fd;
@@ -59,15 +71,15 @@ int main(void)
 		fprintf(gp, "set ylabel '%s'\n", label_name[i]);
 		fprintf(gp, "set output '%s'\n", pdf_file_name[i]);
 		fprintf(gp, "plot [%f:%f][%f:%f]\
-				'DATA/result' u 1:%d w l lc 'blue' title '%s', \
-				'DATA/desire' u 1:%d w l lc 'red' dt(10,10) title 'desire', \
+				'Data/result' u 1:%d w l lc 'blue' title '%s', \
+				'Data/desire' u 1:%d w l lc 'red' dt(10,10) title 'desire', \
 				\n", X_MIN, TIME, y_min[i], y_max[i], ref_data_col[i], data_title[i], des_data_col[i]);
 		i++;
 	}
 	fprintf(gp, "set arrow 1 from %f,%f to %f,%f nohead dt (5, 15)\n", acc_t, y_min[i], acc_t, y_max[i]);
-	fprintf(gp, "set ylabel '%s'\n", "Angle [rad]");
-	fprintf(gp, "set output '%s'\n", "PDF_IMAGES/load_gamma.pdf");
-	fprintf(gp, "plot [%f:%f][%f:%f]'DATA/result' u 1:8 w l lc 'blue' title 'gamma'\n", X_MIN, TIME, y_min[i], y_max[i]);
+	fprintf(gp, "set ylabel '%s'\n", LABEL_ANGLE);
+	fprintf(gp, "set output '%s'\n", LOAD_F);
+	fprintf(gp, "plot [%f:%f][%f:%f]'Data/result' u 1:8 w l lc 'blue' title 'gamma'\n", X_MIN, TIME, y_min[i], y_max[i]);
 
 	fflush(gp);		// gpとのストリーム上のバッファのデータを放出する
 	fprintf(gp, "exit\n");

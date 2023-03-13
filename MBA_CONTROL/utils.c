@@ -1,4 +1,4 @@
-#include "my_header.h"
+#include "sim.h"
 
 void my_free(int rev_f, int size, double **ptr)
 {
