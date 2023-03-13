@@ -7,14 +7,14 @@
 #define X_ITV 1.0
 
 #define Y_INIT_MIN 0.0
-#define Y_INIT_MAX 3.0
+#define Y_INIT_MAX 2.5
 #define Y_ITV 0.5
 
 int main(void)
 {
 	FILE *gp;
 	int i = 0;
-	double t;
+	double t = 0.0;
 
 	if ((gp = popen("/usr/local/bin/gnuplot", "w")) == NULL)
 	{
@@ -36,28 +36,27 @@ int main(void)
 	fprintf(gp, "set border lw 1\n");
 	fprintf(gp, "set view 90,360\n");
 
-	fprintf(gp, "set term gif animate delay 5 font 'Times New Roman, 20'\n");
-	fprintf(gp, "set output 'GIF/2D_ANIMATION.gif'\n");
+	fprintf(gp, "set term gif animate delay 5 font 'Times New Roman, 22'\n");
+	fprintf(gp, "set output 'GIF/2d_GIF.gif'\n");
 
-	t = 0.0;
 	while (t <= TIME)
 	{
 		fprintf(gp, "plot \
-				'DATA/xrotor_DATA' index %d u 2:4 w l lw 2.0 lc 'blue', \
-				'DATA/cable_DATA' index %d u 2:4 w l lc 'black', \
-				'DATA/path_DATA' every ::%d::%d u 2:4 with points pt 13 ps 1.5 lc 'blue',\
-				'DATA/path_DATA' every ::%d::%d u 8:10 with points pt 7 ps 2.0 lc 'green',\
-				'DATA/path_DATA' u 11:13 w l lw 1.5 lt 0 lc 'red' \
+				'DATA/GIF_xrotor' index %d u 2:4 w l lw 2.0 lc 'blue', \
+				'DATA/GIF_cable' index %d u 2:4 w l lc 'black', \
+				'DATA/GIF_path' every ::%d::%d u 2:4 with points pt 13 ps 1.5 lc 'blue',\
+				'DATA/GIF_path' every ::%d::%d u 8:10 with points pt 7 ps 2.0 lc 'green',\
+				'DATA/GIF_path' u 11:13 w l lw 1.5 lt 0 lc 'red' \
 				\n", i, i, i, i, i, i);
 /*
 		fprintf(gp, "plot \
-				'DATA/xrotor_DATA' index %d u 2:4 w l lc 'blue', \
-				'DATA/cable_DATA' index %d u 2:4 w l lc 'black', \
-				'DATA/path_DATA' every ::0::%d u 2:4 w l lw 0.7 lc 'blue',\
-				'DATA/path_DATA' every ::%d::%d u 2:4 with points pt 13 ps 1.0 lc 'blue',\
-				'DATA/path_DATA' every ::0::%d u 8:10 w l lw 0.7 lc 'green',\
-				'DATA/path_DATA' every ::%d::%d u 8:10 with points pt 7 ps 1.5 lc 'green',\
-				'DATA/path_DATA' u 11:13 w l lt 0 lc 'red',\
+				'DATA/GIF_xrotor' index %d u 2:4 w l lc 'blue', \
+				'DATA/GIF_cable' index %d u 2:4 w l lc 'black', \
+				'DATA/GIF_path' every ::0::%d u 2:4 w l lw 0.7 lc 'blue',\
+				'DATA/GIF_path' every ::%d::%d u 2:4 with points pt 13 ps 1.0 lc 'blue',\
+				'DATA/GIF_path' every ::0::%d u 8:10 w l lw 0.7 lc 'green',\
+				'DATA/GIF_path' every ::%d::%d u 8:10 with points pt 7 ps 1.5 lc 'green',\
+				'DATA/GIF_path' u 11:13 w l lt 0 lc 'red',\
 				\n", i, i, i, i, i, i, i, i);
 */
 		i++;

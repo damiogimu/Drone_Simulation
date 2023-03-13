@@ -51,23 +51,23 @@ int main(void)
 	while (t <= TIME)
 	{
 		fprintf(gp, "splot \
-				'DATA/xrotor_DATA' index %d u 2:3:4 w l lw 2.0 lc 'blue', \
-				'DATA/yrotor_DATA' index %d u 2:3:4 w l lw 2.0 lc 'blue', \
-				'DATA/cable_DATA' index %d u 2:3:4 w l lc 'black', \
-				'DATA/path_DATA' every ::%d::%d u 2:3:4 with points pt 13 ps 1.5 lc 'blue',\
-				'DATA/path_DATA' every ::%d::%d u 8:9:10 with points pt 7 ps 2.0 lc 'green',\
-				'DATA/path_DATA' u 11:12:13 w l lw 1.5 lt 0 lc 'red',\
+				'DATA/GIF_xrotor' index %d u 2:3:4 w l lw 2.0 lc 'blue', \
+				'DATA/GIF_yrotor' index %d u 2:3:4 w l lw 2.0 lc 'blue', \
+				'DATA/GIF_cable' index %d u 2:3:4 w l lc 'black', \
+				'DATA/GIF_path' every ::%d::%d u 2:3:4 with points pt 13 ps 1.5 lc 'blue',\
+				'DATA/GIF_path' every ::%d::%d u 8:9:10 with points pt 7 ps 2.0 lc 'green',\
+				'DATA/GIF_path' u 11:12:13 w l lw 1.5 lt 0 lc 'red',\
 				\n", i, i, i, i, i, i, i);
 /*
 		fprintf(gp, "splot \
-				'DATA/xrotor_DATA' index %d u 2:3:4 w l lc 'blue', \
-				'DATA/yrotor_DATA' index %d u 2:3:4 w l lc 'blue', \
-				'DATA/cable_DATA' index %d u 2:3:4 w l lc 'black', \
-				'DATA/path_DATA' every ::0::%d u 2:3:4 w l lw 0.7 lc 'blue',\
-				'DATA/path_DATA' every ::%d::%d u 2:3:4 with points pt 13 ps 1.0 lc 'blue',\
-				'DATA/path_DATA' every ::0::%d u 8:9:10 w l lw 0.7 lc 'green',\
-				'DATA/path_DATA' every ::%d::%d u 8:9:10 with points pt 7 ps 1.5 lc 'green',\
-				'DATA/path_DATA' u 11:12:13 w l lt 0 lc 'red',\
+				'DATA/GIF_xrotor' index %d u 2:3:4 w l lc 'blue', \
+				'DATA/GIF_yrotor' index %d u 2:3:4 w l lc 'blue', \
+				'DATA/GIF_cable' index %d u 2:3:4 w l lc 'black', \
+				'DATA/GIF_path' every ::0::%d u 2:3:4 w l lw 0.7 lc 'blue',\
+				'DATA/GIF_path' every ::%d::%d u 2:3:4 with points pt 13 ps 1.0 lc 'blue',\
+				'DATA/GIF_path' every ::0::%d u 8:9:10 w l lw 0.7 lc 'green',\
+				'DATA/GIF_path' every ::%d::%d u 8:9:10 with points pt 7 ps 1.5 lc 'green',\
+				'DATA/GIF_path' u 11:12:13 w l lt 0 lc 'red',\
 				\n", i, i, i, i, i, i, i, i, i);
 */
 		i++;
