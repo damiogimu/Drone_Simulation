@@ -39,8 +39,8 @@ int main(void)
 	int ref_data_col[PDF_NUM]={COL_X_ACC,COL_X_VELO,COL_X_POS,COL_THETA};
 	int des_data_col[PDF_NUM]={COL_X_ACC_DES,COL_X_VELO_DES,COL_X_POS_DES,COL_THETA_DES}; 
 	double acc_t;
-	double y_max[PDF_NUM+1]={amax+1.0, vmax+1.0, Xt+1.0, 0.3, 0.6};
-	double y_min[PDF_NUM+1]={-(amax+1.0), -(vmax+1.0), -(Xt+1.0), -0.3, -0.6};
+	double y_max[PDF_NUM+1]={20, vmax+1.0, Xt+1.0, 0.3, 0.6};
+	double y_min[PDF_NUM+1]={-(20), -(vmax+1.0), -(Xt+1.0), -0.3, -0.6};
 
 	if ((gp = popen("/usr/local/bin/gnuplot", "w")) == NULL || (fd = open("DATA/acc_time", O_RDONLY)) == -1)
 	{
@@ -49,6 +49,8 @@ int main(void)
 	}
 	get_next_line(fd, &line);
 	acc_t = atof(line) + Z_RISE_T;
+
+
 	free(line);
 	close(fd);
 
@@ -60,7 +62,8 @@ int main(void)
 
 	fprintf(gp, "set term pdf size 6in, 4in font 'Times New Roman, 26'\n");
 	fprintf(gp, "set key font 'Times New Roman, 22'\n");
-	
+
+
 	i = 0;
 	while (i < PDF_NUM)
 	{

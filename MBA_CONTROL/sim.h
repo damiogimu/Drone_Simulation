@@ -9,9 +9,9 @@
 #include <stdlib.h>
 #include <math.h>
 
-#define amax 1.0
-#define vmax 1.0
-#define Xt 2.0
+#define amax 10.0
+#define vmax 0.5
+#define Xt 0.2
 #define Yt 0.0
 
 #define TIME 14.0
@@ -87,8 +87,7 @@ typedef struct	s_rotor
 void	any_traj(double t, t_desire *des);
 void	noncontrol_traj1(double t, t_desire *des);
 void	noncontrol_traj2(double t, t_desire *des);
-void	controled_traj1(double t, double f, t_desire *des);
-void	controled_traj2(double t, double f, t_desire *des);
+
 int		setup(double ***state, double ***k, FILE **fd);
 void	init(double **k, t_rotor *rot, t_desire *des);
 void	output_data1(double t, double *x, FILE **fd, t_rotor *rot);

@@ -81,7 +81,7 @@ int main(void)
 	fprintf(gp, "set output '%s'\n", LOAD_F);
 	fprintf(gp, "plot [%f:%f][%f:%f]'Data/result' u 1:8 w l lc 'blue' title 'gamma'\n", X_MIN, TIME, y_min[i], y_max[i]);
 
-	fflush(gp);		// gpとのストリーム上のバッファのデータを放出する
+	fflush(gp);
 	fprintf(gp, "exit\n");
 	pclose(gp);
 	return (0);

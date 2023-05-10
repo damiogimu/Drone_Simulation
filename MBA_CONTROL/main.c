@@ -13,9 +13,7 @@ int func(double t, double *x, double *k, int i, t_rotor *rot, t_desire *des)
 	f = sqrt(g/r)/(2.0*M_PI);
 //	any_traj(t, des);
 //	noncontrol_traj1(t, des);
-//	controled_traj1(t, f, des);
-//	noncontrol_traj2(t, des);
-	controled_traj2(t, f, des);
+	noncontrol_traj2(t, des);
 
 	ctm_x = des->ddxd + Kdt*(des->dxd-x[8]) + Kpt*(des->xd-x[0]);
 	ctm_y = des->ddyd + Kdt*(des->dyd-x[9]) + Kpt*(des->yd-x[1]);

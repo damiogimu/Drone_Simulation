@@ -52,7 +52,7 @@ void my_fclose(int rev_f, int size, FILE **fd)
 	}
 }
 
-int setup(double ***state, double ***k, FILE **fd)
+int setup(double ***state, double ***k, FILE **fd, t_desire **des, t_rotor **rot, t_gif **gif)
 {
 	char output_files[FD_NUM][100]={PATH_FILE, ERROR_FILE, ANI_PATH_FILE, ANI_CABLE_FILE, ANI_XROTOR_FILE, ANI_YROTOR_FILE, DESIRE_FILE, ACCTIME_FILE};
 	int i;
@@ -68,10 +68,16 @@ int setup(double ***state, double ***k, FILE **fd)
 	}
 	*state = malloc(sizeof(double *) * RK4_SIZE);
 	*k = malloc(sizeof(double *) * RK4_SIZE);
-	if (*state == NULL || *k == NULL)
+	*des = malloc(sizeof(t_desire));
+	*rot = malloc(sizeof(t_rotor));
+	*gif = malloc(sizeof(t_gif));
+	if (*state == NULL || *k == NULL || *des == NULL || *rot == NULL || *gif == NULL)
 	{
-		my_free(0, 0, *state);
-		my_free(0, 0, *k);
+		free(*state);
+		free(*k);
+		free(*des);
+		free(*rot);
+		free(*gif);
 		my_fclose(0, FD_NUM, fd);
 		return (-1);
 	}
@@ -84,6 +90,9 @@ int setup(double ***state, double ***k, FILE **fd)
 		{
 			my_free(1, i, *state);
 			my_free(1, i, *k);
+			my_free(0, 0, *des);
+			my_free(0, 0, *rot);
+			my_free(0, 0, *gif);
 			my_fclose(0, FD_NUM, fd);
 			return (-1);
 		}
@@ -92,7 +101,7 @@ int setup(double ***state, double ***k, FILE **fd)
 	return (0);
 }
 
-void init(double **k, t_integral *intg, t_desire *des, t_rotor *rot)
+void init(double **k, t_integral *intg, t_rotor *rot, t_desire *des, t_gif *gif)
 {
 	int i, j;
 
@@ -124,7 +133,7 @@ void init(double **k, t_integral *intg, t_desire *des, t_rotor *rot)
 	}
 }
 
-void output_data1(double t, double *x, FILE **fd, t_rotor *rot)
+void output_data1(double t, double *x, FILE **fd, t_gif *gif)
 {
 	double x_p, y_p, z_p;
 
@@ -139,23 +148,23 @@ void output_data1(double t, double *x, FILE **fd, t_rotor *rot)
 		fprintf(fd[3], "%f %f %f %f\n", t, x[0], x[1], x[2]);
 		fprintf(fd[3], "%f %f %f %f\n", t, x_p, y_p, z_p);
 		fprintf(fd[3], "\n\n");
-		rot->l_x1 = x[0]+(SCALE*l)*cos(x[5])*cos(x[5]);
-		rot->l_y1 = x[1]+(SCALE*l)*sin(x[5])*cos(x[5]);
-		rot->l_z1 = x[2] -(SCALE*l)*tan(x[4]);
-		fprintf(fd[4], "%f %f %f %f\n", t, rot->l_x1, rot->l_y1, rot->l_z1);
-		rot->l_x2 = x[0]-(SCALE*l)*cos(x[5])*cos(x[5]);
-		rot->l_y2 = x[1]-(SCALE*l*cos(x[5])*sin(x[5]));
-		rot->l_z2 = x[2] + (SCALE*l)*tan(x[4]);
-		fprintf(fd[4], "%f %f %f %f\n", t, rot->l_x2, rot->l_y2, rot->l_z2);
+		gif->l_x1 = x[0]+(SCALE*l)*cos(x[5])*cos(x[5]);
+		gif->l_y1 = x[1]+(SCALE*l)*sin(x[5])*cos(x[5]);
+		gif->l_z1 = x[2] -(SCALE*l)*tan(x[4]);
+		fprintf(fd[4], "%f %f %f %f\n", t, gif->l_x1, gif->l_y1, gif->l_z1);
+		gif->l_x2 = x[0]-(SCALE*l)*cos(x[5])*cos(x[5]);
+		gif->l_y2 = x[1]-(SCALE*l*cos(x[5])*sin(x[5]));
+		gif->l_z2 = x[2] + (SCALE*l)*tan(x[4]);
+		fprintf(fd[4], "%f %f %f %f\n", t, gif->l_x2, gif->l_y2, gif->l_z2);
 		fprintf(fd[4], "\n\n");
-		rot->l_x1 = x[0]+(SCALE*l*cos(x[5])*sin(x[5]));
-		rot->l_y1 = x[1]-(SCALE*l)*cos(x[5])*cos(x[5]);
-		rot->l_z1 = x[2] - (SCALE*l)*tan(x[3]);
-		fprintf(fd[5], "%f %f %f %f\n", t, rot->l_x1, rot->l_y1, rot->l_z1);
-		rot->l_x2 = x[0]-(SCALE*l*sin(x[5])*cos(x[5]));
-		rot->l_y2 = x[1]+(SCALE*l)*cos(x[5])*cos(x[5]);
-		rot->l_z2 = x[2] + (SCALE*l)*tan(x[3]);
-		fprintf(fd[5], "%f %f %f %f\n", t, rot->l_x2, rot->l_y2, rot->l_z2);
+		gif->l_x1 = x[0]+(SCALE*l*cos(x[5])*sin(x[5]));
+		gif->l_y1 = x[1]-(SCALE*l)*cos(x[5])*cos(x[5]);
+		gif->l_z1 = x[2] - (SCALE*l)*tan(x[3]);
+		fprintf(fd[5], "%f %f %f %f\n", t, gif->l_x1, gif->l_y1, gif->l_z1);
+		gif->l_x2 = x[0]-(SCALE*l*sin(x[5])*cos(x[5]));
+		gif->l_y2 = x[1]+(SCALE*l)*cos(x[5])*cos(x[5]);
+		gif->l_z2 = x[2] + (SCALE*l)*tan(x[3]);
+		fprintf(fd[5], "%f %f %f %f\n", t, gif->l_x2, gif->l_y2, gif->l_z2);
 		fprintf(fd[5], "\n\n");
 		fprintf(fd[2], "%f %f %f %f %f %f %f %f %f %f", t,x[0],x[1],x[2],x[3],x[4],x[5],x_p,y_p,z_p);
 	}

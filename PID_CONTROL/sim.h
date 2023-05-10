@@ -11,19 +11,22 @@
 #include <string.h>
 
 #define amax 1.0 
-#define vmax 1.0
+#define vmax 0.5
 #define Xt 2.0
 #define Yt 0.0
 
-#define TIME 12.0
+#define TIME 10.0
 #define Z_RISE_T 2.0
+#define dt 1.0e-3
+
 #define INIT_X 0.0
 #define INIT_Y 0.0
 #define INIT_Z 1.0
 
 #define RK4_SIZE 4
 #define X_NUM 16
-#define dt 1.0e-3
+#define GIF_ITV 0.05
+#define SCALE 1.0
 
 #define INTG_N 6
 typedef struct	s_integral
@@ -49,10 +52,15 @@ typedef struct	s_rotor
 {
 	double T1, T2, T3, T4;
 	double coefi;
+}				t_rotor;
+
+typedef struct	s_gif
+{
+	int accuracy;
 	double l_x1, l_x2;
 	double l_y1, l_y2;
 	double l_z1, l_z2;
-}				t_rotor;
+}				t_gif
 
 // --- CONTROLER GAIN VALS --- //
 #define Kpt 20
@@ -88,7 +96,7 @@ typedef struct	s_rotor
 // ------------------ //
 
 // --- OUTPUT DATA FILES --- //
-#define FD_NUM 8
+#define FD_NUM 9
 #define PATH_FILE "DATA/result"
 #define ERROR_FILE "DATA/error"
 #define ANI_PATH_FILE "DATA/GIF_path"
@@ -97,18 +105,18 @@ typedef struct	s_rotor
 #define ANI_YROTOR_FILE "DATA/GIF_yrotor"
 #define DESIRE_FILE "DATA/desire"
 #define ACCTIME_FILE "DATA/acc_time"
+#define THRUST_FILE "DATA/rotor_thrust"
 // ------------------------ //
-
-#define SCALE 1.0
 
 void	any_traj(double t, t_desire *des);
 void	noncontrol_traj_vt(double t, t_desire *des);
 void	noncontrol_traj_xt(double t, t_desire *des);
 void	controled_traj_vt(double t, double f, t_desire *des);
 void	controled_traj_xt(double t, double f, t_desire *des);
-int		setup(double ***state, double ***k, FILE **fd);
-void	init(double **k, t_integral *intg, t_desire *des, t_rotor *rot);
-void	output_data1(double t, double *x, FILE **fd, t_rotor *rot);
+
+int		setup(double ***state, double ***k, FILE **fd, t_desire **des, t_rotor **rot, t_gif **gif);
+void	init(double **k, t_desire *des, t_rotor *rot, t_integral *intg, t_gif *gif);
+void	output_data1(double t, double *x, FILE **fd, t_gif *gif);
 void	output_data2(double t, double *x, double **k, FILE **fd, t_rotor *rot, t_desire *des);
 void	my_free(int rev_f, int size, double **ptr);
 void	my_fclose(int rev_f, int size, FILE **fd);
